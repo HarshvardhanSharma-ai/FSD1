@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation | Experiment 4</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fdfdfd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .aim-box {
+      background: #8e44ad;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .form-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      width: 350px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.2s;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      border-color: #8e44ad;
+      box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+    }
+
+    .error {
+      color: #e74c3c;
+      font-size: 12px;
+      margin-top: 5px;
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #8e44ad;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:disabled {
+      background: #bdc3c7;
+      cursor: not-allowed;
+    }
+
+    .success-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="aim-box">
+    <strong>Experiment Aim:</strong> To implement real-time form validation in React using state-driven input handling.
+  </div>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App() {
+      const [fields, setFields] = React.useState({ username: "", email: "", question: "", feedback: "" });
+      const [errors, setErrors] = React.useState({ username: "", email: "" });
+      const [success, setSuccess] = React.useState(false);
+
+      const validate = (name, value) => {
+        let err = "";
+        if (name === "username") {
+          if (value.length < 5) err = "Username must be at least 5 chars.";
+        } else if (name === "email") {
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!regex.test(value)) err = "Invalid email format.";
+        }
+        setErrors(prev => ({ ...prev, [name]: err }));
+      };
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFields(prev => ({ ...prev, [name]: value }));
+        if (name === "username" || name === "email") validate(name, value);
+        setSuccess(false);
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!errors.username && !errors.email && fields.username && fields.email) {
+          setSuccess(true);
+        }
+      };
+
+      const isFormValid = fields.username && fields.email && !errors.username && !errors.email;
+
+      return (
+        <div className="form-card">
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>Username</label>
+              <input name="username" value={fields.username} onChange={handleChange} placeholder="Preferred name" />
+              {errors.username && <span className="error">{errors.username}</span>}
+            </div>
+            <div className="input-group">
+              <label>Email Address</label>
+              <input name="email" value={fields.email} onChange={handleChange} placeholder="example@test.com" />
+              {errors.email && <span className="error">{errors.email}</span>}
+            </div>
+            <div class="input-group">
+              <label>Questions / Queries</label>
+              <input name="question" value={fields.question} onChange={handleChange} placeholder="Ask anything..." />
+            </div>
+            <div class="input-group">
+              <label>Feedback</label>
+              <textarea
+                name="feedback"
+                value={fields.feedback}
+                onChange={handleChange}
+                placeholder="Share your experience..."
+                style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', outline: 'none', height: '80px', boxSizing: 'border-box' }}
+              ></textarea>
+            </div>
+            <button type="submit" disabled={!isFormValid}>Register & Submit</button>
+          </form>
+          {success && (
+            <div className="success-box">
+              ✅ Form validated and submitted mapping to UID recorded.
+              <br /><strong>Question:</strong> {fields.question}
+              <br /><strong>Feedback:</strong> {fields.feedback}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>

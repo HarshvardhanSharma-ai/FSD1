@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Basics | Experiment 3</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ecf0f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .aim-box {
+      background: #3498db;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      text-align: center;
+      max-width: 600px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+      background: white;
+      width: 320px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-header {
+      height: 120px;
+      background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      background: #fdfdfd;
+      border-radius: 50%;
+      border: 5px solid white;
+      margin: -50px auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .info {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .name {
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin: 0;
+    }
+
+    .role {
+      font-size: 14px;
+      color: #7f8c8d;
+      margin: 5px 0 15px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 15px;
+    }
+
+    .stat-val {
+      font-weight: bold;
+      display: block;
+      color: #2c3e50;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #95a5a6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="aim-box">
+    <strong>Experiment Aim:</strong> To understand React component structure and props by creating a modular
+    <code>ProfileCard</code> component.
+  </div>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Basic Component with Props
+    function ProfileCard({ name, role, posts, followers }) {
+      return (
+        <div className="card">
+          <div className="card-header"></div>
+          <div className="profile-img">👤</div>
+          <div className="info">
+            <p className="name">{name}</p>
+            <p className="role">{role}</p>
+            <div className="stats">
+              <div><span className="stat-val">{posts}</span> <span className="stat-label">Posts</span></div>
+              <div><span className="stat-val">{followers}</span> <span className="stat-label">Followers</span></div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <ProfileCard
+          name="Harshvardhan Sharma"
+          role="FSD Developer"
+          posts="12"
+          followers="404"
+        />
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSD Lab Work | Student Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Simple Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <h2>FSD Lab</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-item active" onclick="showHome()">🏠 Home</a></li>
+                <li class="nav-label">Experiments</li>
+                <li><a href="#" class="nav-item"
+                        onclick="loadExp('FSD2_1-main/FSD2_1-main/public/index.html', this)">Exp 1: Counter</a></li>
+                <li><a href="#" class="nav-item"
+                        onclick="loadExp('FSD2_2-main/FSD2_2-main/public/index.html', this)">Exp 2: To-Do List</a></li>
+                <li><a href="#" class="nav-item"
+                        onclick="loadExp('FSD2_3-main/FSD2_3-main/public/index.html', this)">Exp 3: Component Basics</a>
+                </li>
+                <li><a href="#" class="nav-item"
+                        onclick="loadExp('FSD2_4-main/FSD2_4-main/public/index.html', this)">Exp 4: Form Validation</a>
+                </li>
+                <li class="nav-signature">Harshvardhan</li>
+            </ul>
+            <div class="sidebar-footer">
+                <p class="student-name">Harshvardhan Sharma</p>
+                <p class="student-uid">23BAI70404</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="top-bar">
+                <h1 id="headerTitle">Welcome to My FSD Project</h1>
+            </header>
+
+            <div id="homeView" class="view">
+                <div class="welcome-box">
+                    <h3>Project Information</h3>
+                    <p>This is my collection of React experiments for the Full Stack Development lab.</p>
+                    <div class="user-details-box">
+                        <p><strong>Student Name:</strong> Harshvardhan Sharma</p>
+                        <p><strong>UID:</strong> 23BAI70404</p>
+                    </div>
+                    <p><strong>Date:</strong> January 2026</p>
+                </div>
+            </div>
+
+            <div id="expView" class="view" style="display: none;">
+                <iframe id="mainFrame" src="" frameborder="0"></iframe>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showHome() {
+            document.getElementById('homeView').style.display = 'block';
+            document.getElementById('expView').style.display = 'none';
+            document.getElementById('headerTitle').textContent = 'Welcome to My FSD Project';
+
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            document.querySelector('.nav-item').classList.add('active');
+        }
+
+        function loadExp(url, el) {
+            document.getElementById('homeView').style.display = 'none';
+            document.getElementById('expView').style.display = 'block';
+            document.getElementById('mainFrame').src = url;
+            document.getElementById('headerTitle').textContent = el.textContent;
+
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>
